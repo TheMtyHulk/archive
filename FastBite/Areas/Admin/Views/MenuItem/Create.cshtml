@@ -1,0 +1,44 @@
+@model FastBite.Models.Viewmodels.MenuItemViewModel
+@using FastBite.Extensions
+@{
+    ViewData["Title"] = "Create";
+     Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Create Menu Item</h2>
+<form method="post">
+    <input type="hidden" asp-for="MenuItem.RestaurantId" />
+
+    <div class="form-group">
+        <label>Category</label>
+        <select id="CategoryId" name="CategoryId" class="form-control">
+            <option value="1">Apetizer1</option>
+            <option value="2">Biryani</option>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label>SubCategory</label>
+        <select id="SubCategoryId" name="SubCategoryId" class="form-control">
+            <option value="1">Beverages</option>
+            <option value="2">Mocktails</option>
+            <option value="3">Veg</option>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="MenuItem.Name"></label>
+        <input asp-for="MenuItem.Name" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="MenuItem.description"></label>
+        <input asp-for="MenuItem.description" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="MenuItem.price"></label>
+        <input asp-for="MenuItem.price" class="form-control" />
+    </div>
+
+    <input type="submit" value="Create" class="btn btn-primary" />
+    <a asp-action="Index" asp-route-restid="@Model.MenuItem.RestaurantId" class="btn btn-secondary">Back to List</a>
+</form>

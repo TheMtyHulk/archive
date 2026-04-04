@@ -1,0 +1,36 @@
+@model FastBite.Models.Viewmodels.CategoryAndSubCategoryModel
+@using FastBite.Extensions
+
+
+@{
+    ViewData["Title"] = "Create";
+     Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Edit SubCategory</h2>
+<form method="post">
+    <input type="hidden" asp-for="subCategory.Id" />
+    <div class="form-group">
+        <label>Category</label>
+        <select id="ddCategoryList" name="ddCategoryList" class="form-control">
+            @foreach (var category in Model.categoryList)
+            {
+                if (category.Id == Model.subCategory.CategoryId)
+                {
+                    <option selected value="@category.Id">@category.Name</option>
+                }
+                else
+                {
+                    <option value="@category.Id">@category.Name</option>
+                }
+            }
+        </select>
+    </div>
+    <div class="form-group">
+        <label asp-for="subCategory.Name"></label>
+        <input asp-for="subCategory.Name" class="form-control" />
+        <span asp-validation-for="subCategory.Name" class="text-danger"></span>
+    </div>
+    <input type="submit" value="Update" class="btn btn-primary" />
+    <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+</form>

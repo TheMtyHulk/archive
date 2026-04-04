@@ -1,0 +1,21 @@
+
+@model CartItem
+@using FastBite.Extensions
+@{
+    ViewData["Title"] = "AddToCart";
+     Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<br/>
+<h2 class="text-info">Add to cart</h2>
+<br/>
+
+<form method="post">
+    <input type="hidden" asp-for="MenuItemId" />
+    <div class="form-group">
+        <label>Quantity</label>
+        <input asp-for="Count" class="form-control" />
+    </div>
+    <button type="submit" class="btn btn-primary">AddToCart</button>
+    <a asp-controller="Home" asp-action="Index" class="btn btn-secondary">Back</a>
+</form>
+

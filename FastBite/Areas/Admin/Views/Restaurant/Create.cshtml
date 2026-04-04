@@ -1,0 +1,22 @@
+@model FastBite.Models.Restaurant
+
+@{
+    ViewData["Title"] = "Create";
+     Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<br/>
+<h2 class="text-info">Create</h2>
+<br/>
+
+<form method="post">
+    <div class="form-group">
+        <label asp-for="RestaurantName"></label>
+        <input id="RestaurantName" name="RestaurantName" value="@Model?.RestaurantName" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="Address"></label>
+        <input id="Address" name="Address" value="@Model?.Address" class="form-control" />
+    </div>
+    <input type="submit" value="Create" class="btn btn-primary" />
+    <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+</form>

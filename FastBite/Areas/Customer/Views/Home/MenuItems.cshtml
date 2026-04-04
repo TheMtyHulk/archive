@@ -1,0 +1,32 @@
+@model FastBite.Models.ViewModel.CategoryAndMenuItemViewModel
+@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor HttpContextAccessor
+
+<br/>
+
+<h2>@Model.Restaurant?.RestaurantName</h2>
+<div class="mb-2">
+	<a class="btn btn-outline-primary" href="/Customer/Cart/PlaceOrder">Cart(@(HttpContextAccessor.HttpContext.Session.GetInt32("cartCount") ?? 0))</a>
+</div>
+
+<table class="table table-bordered">
+	<thead>
+		<tr>
+			<th>Name</th>
+			<th>Description</th>
+			<th>Price</th>
+			<th></th>
+		</tr>
+	</thead>
+	<tbody>
+		@foreach (var item in Model.MenuItem)
+		{
+			<tr>
+				<td>@item.Name</td>
+				<td>@item.description</td>
+				<td>@item.price</td>
+				<td><a class="btn btn-success" asp-controller="CartItem" asp-action="AddToCart" asp-route-id="@item.Id">Add To Cart</a></td>
+			</tr>
+		}
+	</tbody>
+</table>

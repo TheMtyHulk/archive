@@ -1,0 +1,43 @@
+@model IEnumerable<FastBite.Models.ViewModel.OrderViewModel>
+@using FastBite.Utility;
+
+@{
+    ViewData["Title"] = "MyOrders";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<h2>Pending Orders</h2>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Order Id</th>
+            <th>Status</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var order in Model)
+        {
+            <tr>
+                <td>@order.cart.Id</td>
+                <td>@order.cart.orderStatus</td>
+                <td>
+                    @if (order.cart.orderStatus == StaticDefinitions.PendingConfirmation)
+                    {
+                        <a asp-action="Confirm" asp-route-id="@order.cart.Id">Accept Order</a>
+                        <span> | </span>
+                        <a asp-action="Cancel" asp-route-id="@order.cart.Id">Cancel Order</a>
+                    }
+                    else if (order.cart.orderStatus == StaticDefinitions.OrderConfirmed)
+                    {
+                        <a asp-action="Ready" asp-route-id="@order.cart.Id">Order Prepared</a>
+                        <span> | </span>
+                        <a asp-action="Cancel" asp-route-id="@order.cart.Id">Cancel Order</a>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

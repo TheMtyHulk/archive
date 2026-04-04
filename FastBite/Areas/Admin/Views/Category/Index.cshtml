@@ -1,0 +1,50 @@
+@model IEnumerable<Category>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Category List</h2>
+<p><a asp-area="Admin" asp-action="Create" class="btn btn-info">Create New</a></p>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+                <td>
+                    <a asp-area="Admin" asp-action="Edit" asp-route-id="@item.Id" class="btn btn-primary btn-sm">Edit</a>
+
+<script>
+    (function () {
+        var storageKey = 'fb_categories';
+        var categories = [];
+        try {
+            categories = JSON.parse(localStorage.getItem(storageKey) || '[]');
+        } catch (err) {
+            categories = [];
+        }
+
+        function render() {
+            var tbody = document.querySelector('table tbody');
+            if (!tbody) return;
+            tbody.innerHTML = '<tr><td></td><td></td></tr>';
+            categories.forEach(function (name, index) {
+                var row = document.createElement('tr');
+                row.innerHTML = '<td>' + name + '</td><td><a href="/Admin/Category/Edit/' + (index + 1) + '" class="btn btn-primary btn-sm">Edit</a><a href="/Admin/Category/Delete/' + (index + 1) + '" class="btn btn-danger btn-sm">Delete</a></td>';
+                tbody.appendChild(row);
+            });
+        }
+
+        render();
+    })();
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.Name</td>
+                    <td>
+                        <a asp-area="Admin" asp-action="Edit" asp-route-id="@item.Id" class="btn btn-primary btn-sm">Edit</a>
+                        <a asp-area="Admin" asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger btn-sm">Delete</a>
+                    </td>
+                </tr>
+            }
+</script>
+                    <a asp-area="Admin" asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger btn-sm">Delete</a>

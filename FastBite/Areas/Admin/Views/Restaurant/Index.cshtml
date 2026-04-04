@@ -1,0 +1,37 @@
+@model IEnumerable<Restaurant>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Restaurant List</h2>
+<p><a asp-area="Admin" asp-action="Create" class="btn btn-info">Create New</a></p>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Restaurant Name</th>
+            <th>Address</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr><td></td><td></td><td></td></tr>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.RestaurantName</td>
+                <td>@item.Address</td>
+                <td>
+                    <a asp-area="Admin" asp-controller="MenuItem" asp-action="Index" asp-route-restid="@item.Id">MenuItems</a>
+                    |
+                    <a asp-area="Customer" asp-controller="Order" asp-action="PendingRestaurantOrderDetails" asp-route-restid="@item.Id">Orders</a>
+                    |
+                    <a asp-area="Admin" asp-action="Edit" asp-route-id="@item.Id">Edit</a>
+                    |
+                    <a asp-area="Admin" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

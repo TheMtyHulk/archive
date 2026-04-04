@@ -1,0 +1,22 @@
+@model IEnumerable<FastBite.Models.ViewModel.OrderViewModel>
+@using FastBite.Utility
+@{
+    ViewData["Title"] = "MyOrders";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+
+
+<div class =" row">
+ @foreach (var order in Model)
+ {
+     <div class="card col-md-5 m-2">
+         <div class="card-body">
+             <h5>Order #@order.cart.Id</h5>
+             <p>Status: @order.cart.orderStatus</p>
+             <p>Total: @order.cart.OrderTotal.ToString("0")</p>
+         </div>
+     </div>
+ }
+</div>
+  

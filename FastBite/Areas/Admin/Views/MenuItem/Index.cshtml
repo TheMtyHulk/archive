@@ -1,0 +1,41 @@
+@model IEnumerable<MenuItem>
+@using FastBite.Models
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var categories = ViewData["categories"] as IEnumerable<Category> ?? Enumerable.Empty<Category>();
+    var subCategories = ViewData["subCategories"] as IEnumerable<SubCategory> ?? Enumerable.Empty<SubCategory>();
+    var restId = ViewData["restid"]?.ToString() ?? "0";
+}
+
+<h2>Menu Items</h2>
+
+<p><a asp-area="Admin" asp-action="Create" asp-route-restid="@restId" class="btn btn-info">Create New</a></p>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Category</th>
+            <th>SubCategory</th>
+            <th>Price</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr><td></td><td></td><td></td><td></td><td></td></tr>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Name</td>
+                <td>@item.Category?.Name</td>
+                <td>@item.SubCategory?.Name</td>
+                <td>@item.price</td>
+                <td>
+                    <a asp-area="Admin" asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                    <a asp-area="Admin" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

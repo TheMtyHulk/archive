@@ -1,0 +1,27 @@
+@model FastBite.Models.ViewModel.OrderViewModel
+
+@{
+    ViewData["Title"] = "ConfirmOrder";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Order Confirmation</h2>
+<h4 id="orderstatus">@Model.cart.orderStatus</h4>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Item</th>
+            <th>Count</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.OrderDetailsList)
+        {
+            <tr>
+                <td>@item.Name</td>
+                <td>@item.Count</td>
+            </tr>
+        }
+    </tbody>
+</table>

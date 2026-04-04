@@ -1,0 +1,51 @@
+@model FastBite.Models.ViewModel.CartViewModel
+
+@{
+    ViewData["Title"] = "PlaceOrder";
+     Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<br/>
+
+<h2>Place Order</h2>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Item</th>
+            <th>Price</th>
+            <th>Count</th>
+            <th>Update</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.CartItemList)
+        {
+            <tr>
+                <td>@item.MenuItem?.Name</td>
+                <td>@item.MenuItem?.price</td>
+                <td>@item.Count</td>
+                <td>
+                    <a id="Add" class="btn btn-sm btn-success" asp-action="Add" asp-route-id="@item.Id">+</a>
+                    <a id="minus" class="btn btn-sm btn-warning" asp-action="minus" asp-route-id="@item.Id">-</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<div class="mb-2">
+    Total: <span id="Total">@Model.Cart.OrderTotal.ToString("0")</span>
+</div>
+
+<form method="post" asp-action="Apply" class="mb-2">
+    <input type="text" id="offercode" name="offercode" value="@Model.Cart.offercode" class="form-control d-inline-block" style="width:220px" />
+    <button type="submit" class="btn btn-info">Apply</button>
+</form>
+
+<form method="post" asp-action="Remove" class="mb-2">
+    <button type="submit" class="btn btn-danger">Remove</button>
+</form>
+
+<form method="post" asp-action="PlaceOrder">
+    <button type="submit" class="btn btn-primary">PlaceOrder</button>
+</form>
