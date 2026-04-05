@@ -30,39 +30,9 @@ namespace FastBite.Areas.Admin.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var ap = await _db.Category.FirstOrDefaultAsync(c => c.Name == "Apetizer1");
-            var oldAp = await _db.Category.FirstOrDefaultAsync(c => c.Name == "Apetizer");
-            if (ap == null && oldAp != null)
-            {
-                oldAp.Name = "Apetizer1";
-                _db.Category.Update(oldAp);
-                await _db.SaveChangesAsync();
-            }
-
-            ap = await _db.Category.FirstOrDefaultAsync(c => c.Name == "Apetizer1");
-            var biryani = await _db.Category.FirstOrDefaultAsync(c => c.Name == "Biryani");
-
-            if (ap != null && !await _db.SubCategory.AnyAsync(s => s.Name == "Beverages" && s.CategoryId == ap.Id))
-            {
-                _db.SubCategory.Add(new SubCategory { Name = "Beverages", CategoryId = ap.Id });
-            }
-
-            if (ap != null && !await _db.SubCategory.AnyAsync(s => s.Name == "Mocktails" && s.CategoryId == ap.Id))
-            {
-                _db.SubCategory.Add(new SubCategory { Name = "Mocktails", CategoryId = ap.Id });
-            }
-
-            if (biryani != null && !await _db.SubCategory.AnyAsync(s => s.Name == "Veg" && s.CategoryId == biryani.Id))
-            {
-                _db.SubCategory.Add(new SubCategory { Name = "Veg", CategoryId = biryani.Id });
-            }
-
-            await _db.SaveChangesAsync();
-
             var subCategories = await _db.SubCategory
                 .Include(s => s.category)
-                .OrderBy(s => s.Name == "Beverages" ? 0 : s.Name == "Mocktails" ? 1 : s.Name == "Veg" ? 2 : 3)
-                .ThenBy(s => s.Id)
+                .OrderBy(s => s.Id)
                 .ToListAsync();
             return View(subCategories);
         }
@@ -101,13 +71,8 @@ namespace FastBite.Areas.Admin.Controllers
 
             if (!string.IsNullOrWhiteSpace(model.subCategory.Name))
             {
-                var exists = await _db.SubCategory.AnyAsync(s =>
-                    s.CategoryId == model.subCategory.CategoryId && s.Name == model.subCategory.Name);
-                if (!exists)
-                {
-                    _db.SubCategory.Add(model.subCategory);
-                    await _db.SaveChangesAsync();
-                }
+                _db.SubCategory.Add(model.subCategory);
+                await _db.SaveChangesAsync();
 
                 return RedirectToAction(nameof(Index));
             }

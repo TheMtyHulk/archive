@@ -32,26 +32,6 @@ namespace FastBite.Areas.Admin.Controllers
             ViewData["categories"] = await _db.Category.OrderBy(c => c.Id).ToListAsync();
             ViewData["subCategories"] = await _db.SubCategory.OrderBy(s => s.Id).ToListAsync();
 
-            var biryani = await _db.Category.FirstOrDefaultAsync(c => c.Name == "Biryani");
-            var ap = await _db.Category.FirstOrDefaultAsync(c => c.Name == "Apetizer1" || c.Name == "Apetizer");
-            var veg = await _db.SubCategory.FirstOrDefaultAsync(s => s.Name == "Veg");
-            var bev = await _db.SubCategory.FirstOrDefaultAsync(s => s.Name == "Beverages");
-
-            if (restid == 2 && biryani != null && veg != null && !await _db.MenuItem.AnyAsync(m => m.RestaurantId == 2 && m.Name == "Dumbiryani"))
-            {
-                _db.MenuItem.Add(new MenuItem { Name = "Dumbiryani", description = "RiceItem", price = 190, imageUrl = StaticDefinitions.defaultimage, CategoryId = biryani.Id, SubCategoryId = veg.Id, RestaurantId = 2 });
-            }
-            if (restid == 2 && ap != null && bev != null && !await _db.MenuItem.AnyAsync(m => m.RestaurantId == 2 && m.Name == "Lemonade"))
-            {
-                _db.MenuItem.Add(new MenuItem { Name = "Lemonade", description = "MadebyLemon", price = 110, imageUrl = StaticDefinitions.defaultimage, CategoryId = ap.Id, SubCategoryId = bev.Id, RestaurantId = 2 });
-            }
-            if (restid == 1 && biryani != null && veg != null && !await _db.MenuItem.AnyAsync(m => m.RestaurantId == 1 && m.Name == "vegbiryani"))
-            {
-                _db.MenuItem.Add(new MenuItem { Name = "vegbiryani", description = "RiceItem", price = 130, imageUrl = StaticDefinitions.defaultimage, CategoryId = biryani.Id, SubCategoryId = veg.Id, RestaurantId = 1 });
-            }
-
-            await _db.SaveChangesAsync();
-
             var menuItems = await _db.MenuItem
                 .Include(m => m.Category)
                 .Include(m => m.SubCategory)

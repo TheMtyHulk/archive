@@ -96,7 +96,8 @@ namespace FastBite.Areas.Customer.Controllers
             var menuItems = await _db.MenuItem
                 .Include(m => m.Category)
                 .Where(m => m.RestaurantId == newItem.RestaurantId)
-                .OrderBy(m => m.Id)
+                .OrderBy(m => m.CategoryId)
+                .ThenBy(m => m.Id)
                 .ToListAsync();
 
             var model = new CategoryAndMenuItemViewModel

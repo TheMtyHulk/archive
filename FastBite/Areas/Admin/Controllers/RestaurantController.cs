@@ -30,17 +30,6 @@ namespace FastBite.Areas.Admin.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var ownerId = GetUserId();
-            if (!await _db.Restaurant.AnyAsync(r => r.RestaurantName == "Restaurant1"))
-            {
-                _db.Restaurant.Add(new Restaurant { RestaurantName = "Restaurant1", Address = "Wallstreet", OwenerID = ownerId, imageurl = StaticDefinitions.defaultimage });
-            }
-            if (!await _db.Restaurant.AnyAsync(r => r.RestaurantName == "Restaurant2"))
-            {
-                _db.Restaurant.Add(new Restaurant { RestaurantName = "Restaurant2", Address = "Wallstreet", OwenerID = ownerId, imageurl = StaticDefinitions.defaultimage });
-            }
-            await _db.SaveChangesAsync();
-
             var restaurants = await _db.Restaurant
                 .OrderBy(r => r.Id)
                 .ToListAsync();

@@ -12,17 +12,20 @@
     <div class="form-group">
         <label>Category</label>
         <select id="CategoryId" name="CategoryId" class="form-control">
-            <option value="1">Apetizer1</option>
-            <option value="2">Biryani</option>
+            @foreach (var cat in Model.Category)
+            {
+                <option value="@cat.Id">@cat.Name</option>
+            }
         </select>
     </div>
 
     <div class="form-group">
         <label>SubCategory</label>
         <select id="SubCategoryId" name="SubCategoryId" class="form-control">
-            <option value="1">Beverages</option>
-            <option value="2">Mocktails</option>
-            <option value="3">Veg</option>
+            @foreach (var sub in Model.SubCategory)
+            {
+                <option value="@sub.Id">@sub.Name</option>
+            }
         </select>
     </div>
 

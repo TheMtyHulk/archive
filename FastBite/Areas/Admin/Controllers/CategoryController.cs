@@ -24,31 +24,9 @@ namespace FastBite.Areas.Admin.Controllers
 
         public async Task<IActionResult> Index()
         {
-            if (!await _db.Category.AnyAsync(c => c.Name == "Apetizer" || c.Name == "Apetizer1"))
-            {
-                _db.Category.Add(new Category { Name = "Apetizer" });
-            }
-
-            if (!await _db.Category.AnyAsync(c => c.Name == "Biryani"))
-            {
-                _db.Category.Add(new Category { Name = "Biryani" });
-            }
-
-            await _db.SaveChangesAsync();
-
-            var apetizerRows = await _db.Category.Where(c => c.Name == "Apetizer" && _db.Category.Any(x => x.Name == "Apetizer1")).ToListAsync();
-            if (apetizerRows.Any())
-            {
-                foreach (var category in apetizerRows)
-                {
-                    category.Name = "Apetizer1";
-                }
-
-                _db.Category.UpdateRange(apetizerRows);
-                await _db.SaveChangesAsync();
-            }
-
-            return View(await _db.Category.OrderBy(c => c.Id).ToListAsync());
+            var cats = await _db.Category.OrderBy(c => c.Id).ToListAsync();
+            System.Console.WriteLine($"[CAT-INDEX] Category count: {cats.Count}");
+            return View(cats);
         }
 
         public IActionResult Create()
@@ -74,12 +52,10 @@ namespace FastBite.Areas.Admin.Controllers
                 return View(category);
             }
 
-            var exists = await _db.Category.AnyAsync(c => c.Name == category.Name);
-            if (!exists)
-            {
-                _db.Category.Add(category);
-                await _db.SaveChangesAsync();
-            }
+            System.Console.WriteLine($"[CAT-CREATE] Adding category: {category.Name}");
+            _db.Category.Add(category);
+            await _db.SaveChangesAsync();
+            System.Console.WriteLine($"[CAT-CREATE] Saved with Id: {category.Id}");
 
             return RedirectToAction(nameof(Index));
         }

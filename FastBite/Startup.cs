@@ -77,6 +77,19 @@ namespace FastBite
                 app.UseHsts();
             }
          //   app.UseHttpsRedirection();
+            app.Use(async (context, next) =>
+            {
+                var path = context.Request.Path.ToString();
+                if (!path.StartsWith("/lib/") && !path.StartsWith("/css/") && !path.StartsWith("/js/") && !path.StartsWith("/images/") && !path.EndsWith(".css") && !path.EndsWith(".js"))
+                {
+                    System.Console.WriteLine($"[REQ] {context.Request.Method} {context.Request.Path}{context.Request.QueryString}");
+                }
+                await next();
+                if (!path.StartsWith("/lib/") && !path.StartsWith("/css/") && !path.StartsWith("/js/") && !path.StartsWith("/images/") && !path.EndsWith(".css") && !path.EndsWith(".js"))
+                {
+                    System.Console.WriteLine($"[RES] {context.Request.Method} {context.Request.Path} -> {context.Response.StatusCode}");
+                }
+            });
             app.UseStaticFiles();
             app.UseSession();
             app.UseRouting();

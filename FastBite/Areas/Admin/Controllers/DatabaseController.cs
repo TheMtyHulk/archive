@@ -26,6 +26,7 @@ namespace FastBite.Areas.Admin.Controllers
          }
          public void deleteContext(){
            _db.Database.EnsureDeleted();
+           _db.Database.EnsureCreated();
 
            Console.WriteLine("hello");
            DirectoryInfo di = new DirectoryInfo("./wwwroot/images/restaurant");
